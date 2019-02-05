@@ -48,7 +48,9 @@ var CreatePost = func(w http.ResponseWriter, r *http.Request) {
 	file, header, err := r.FormFile("input-file-preview")
 	post := &models.Post{}
 
-	if err != nil && header.Size > 0 {
+	if err != nil || header.Size == 0 {
+		fmt.Println("File not sent")
+	} else {
 		filename := uuid.Must(uuid.NewV4()).String()
 		defer file.Close()
 
