@@ -32,7 +32,7 @@
                     <th class='border-0'>Text</th>
                     <th class='border-0'>Category</th>
                     <th class='border-0'>Votes</th>
-
+                    <th class='border-0'>Created At</th>
                   </tr>
                 </thead>
                 <tbody id="accordionMedication">
@@ -53,6 +53,7 @@
                     <td>
                       {{$post.VotesCount}}
                     </td>
+                    <td>{{myCustomFunc $post.CreatedAt false}}</td>
                   </tr>
                   {{end}}
                 </tbody>

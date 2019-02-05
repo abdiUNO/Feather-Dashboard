@@ -78,7 +78,7 @@ func GetPosts() []*Post {
 
 	posts := make([]*Post, 0)
 
-	err := GetDB().Table("post").Preload("User").Find(&posts).Error
+	err := GetDB().Table("post").Preload("User").Order("createdAt DESC").Find(&posts).Error
 	if err != nil {
 		fmt.Println(err)
 		return nil

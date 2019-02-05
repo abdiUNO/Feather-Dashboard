@@ -35,7 +35,7 @@ func GetComments(id string) []*Comment {
 
 	comments := make([]*Comment, 0)
 
-	err := GetDB().Table("comment").Preload("User").Where("postId = ?", id).Find(&comments).Error
+	err := GetDB().Table("comment").Preload("User").Where("postId = ?", id).Order("createdAt DESC").Find(&comments).Error
 	if err != nil {
 		fmt.Println(err)
 		return nil
