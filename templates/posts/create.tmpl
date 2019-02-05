@@ -1,0 +1,71 @@
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New Post</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="/posts/new" method="post" enctype="multipart/form-data">
+      <div class="modal-body p-0 mx-5 mb-5 mt-3">
+          <div class="form-group mb-3">
+            <div class="form-group mb-4">
+              <label for="fakeuser">User:</label>
+              <select name="fakeuser" id="fakeuser" class="form-control" required>
+                  <option selected="selected">Choose Fake User</option>
+                  {{range $key, $fake := .FakeUsers}}
+                    <option value="{{$fake.User.ID}}">{{$fake.Username}}</option>
+                  {{end}}
+              </select>
+            </div>
+            <label for="text">Text:</label>
+            <textarea class="form-control" id="text" placeholder="Enter post text" name="text" rows="3" required></textarea>
+          </div>
+          <div class="form-group mb-4">
+            <label for="category">Category:</label>
+            <select name="category" id="category" class="form-control" required>
+                <option selected="selected">Choose one</option>
+                <option value="Gaming">Gaming</option>
+                <option value="Fitness">Fitness</option>
+                <option value="Sports">Sports</option>
+                <option value="Music">Music</option>
+                <option value="Movies">Movies</option>
+                <option value="News">News</option>
+                <option value="Conservative">Conservative</option>
+                <option value="Liberal">Liberal</option>
+                <option value="Business">Business</option>
+                <option value="Art">Art</option>
+                <option value="Science and Engineering">Science and Engineering</option>
+                <option value="Stories">Stories</option>
+                <option value="Anonymous">Anonymous</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="image">Image (optional):</label>
+            <div class="input-group image-preview">
+              <input type="text" class="form-control image-preview-filename" disabled="disabled"  aria-describedby="basic-addon2" name="image">
+              <div class="input-group-append">
+                <!-- image-preview-clear button -->
+                <button type="button" class="btn btn-danger image-preview-clear" style="display:none;">
+                    <span class="glyphicon glyphicon-remove"></span> Clear
+                </button>
+                <!-- image-preview-input -->
+                <div class="btn btn-primary image-preview-input">
+                    <span class="glyphicon glyphicon-folder-open"></span>
+                    <span class="image-preview-input-title">Browse</span>
+                    <input type="file" accept="image/png, image/jpeg, image/gif" name="input-file-preview"/> <!-- rename it -->
+                </div>
+              </div>
+            </div> <!-- /input-group image-preview -->
+            <img src class="rounded img-thumbnail mb-2 img-preview mt-5" style="max-height:100px;" >
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" class="btn btn-success" value="Add Post">
+      </div>
+    </form>
+    </div>
+  </div>
+</div>

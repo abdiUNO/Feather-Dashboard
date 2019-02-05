@@ -1,0 +1,33 @@
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New Comment</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="/posts/{{.Post.ID}}" method="post">
+        <div class="modal-body p-0 mx-5 mb-5 mt-3">
+          <div class="form-group mb-3">
+            <div class="form-group mb-4">
+              <label for="fakeuser">User:</label>
+              <select name="fakeuser" id="fakeuser" class="form-control" required>
+                  <option selected="selected">Choose Fake User</option>
+                  {{range $key, $fake := .FakeUsers}}
+                    <option value="{{$fake.User.ID}}">{{$fake.Username}}</option>
+                  {{end}}
+              </select>
+            </div>
+            <label for="text">Text:</label>
+            <textarea class="form-control" id="text" placeholder="Enter post text" name="text" rows="3" required></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <input type="submit" class="btn btn-success" value="Add Post">
+        </div>
+    </form>
+    </div>
+  </div>
+</div>

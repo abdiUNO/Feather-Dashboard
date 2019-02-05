@@ -1,0 +1,122 @@
+<div class="container-fluid">
+
+
+  <br>
+
+  {{ range .FlashedMessages }}
+    <div class="alert alert-success" role="alert">{{ . }}</div>
+  {{ end }}
+
+  <br>
+
+
+  <button type="button" class="btn btn-primary float-right px-4 py-2" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="fas fa-plus"></i> Add post</button>
+  <br>
+
+  <div class="card shadow mt-5">
+    <div class="card-header py-3">
+      <h5 class="m-0 font-weight-bold text-primary">Posts</h5>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4 px-2">
+
+
+
+          <div class="row">
+            <div class="col-sm-12">
+              <table class="table table-hover table-borderless dataTable mt-5 border bg-white material-card" id="dataTable" aria-describedby="dataTable_info">
+                <thead>
+                  <tr  role="row" class="m-3">
+                    <th class='border-0'>User</th>
+                    <th class='border-0'>Text</th>
+                    <th class='border-0'>Category</th>
+                    <th class='border-0'>Votes</th>
+
+                  </tr>
+                </thead>
+                <tbody id="accordionMedication">
+                  {{range $key, $post := .Posts}}
+                  <tr class="border-bottom">
+                    <th scope="row" style="padding-top:25px;">
+                      <a href="/posts/{{$post.ID}}">
+                        <img src="https://feather.sfo2.cdn.digitaloceanspaces.com/{{.User.Image}}" class="rounded img-thumbnail mb-2" style="width:45px;height:45px; padding:2px;" alt="Avatar">
+                        <span>{{$post.User.Username}}</span>
+                      </a>
+                    </th>
+                    <td>
+                      <a href="/posts/{{$post.ID}}">
+                        {{$post.Text}}
+                      </a>
+                    </td>
+                    <td>{{$post.Category}}</td>
+                    <td>
+                      {{$post.VotesCount}}
+                    </td>
+                  </tr>
+                  {{end}}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{{template "posts/create" .}}
+
+<script type="text/javascript">
+
+  $(".img-preview").hide()
+
+  $('#exampleModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var recipient = button.data('whatever') // Extract info from data-* attributes
+    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+    var modal = $(this)
+    modal.find('.modal-title').text('New message to ' + recipient)
+    modal.find('.modal-body input').val(recipient)
+  })
+
+
+  $(function() {
+    // Create the close button
+    var closebtn = $('<button/>', {
+        type:"button",
+        text: 'x',
+        id: 'close-preview',
+        style: 'font-size: initial;',
+    });
+    closebtn.attr("class","close pull-right");
+    // Set the popover default content
+
+    // Clear event
+    $('.image-preview-clear').click(function(){
+        $('.image-preview-filename').val("");
+        $('.image-preview-clear').hide();
+        $('.image-preview-input input:file').val("");
+        $(".image-preview-input-title").text("Browse");
+        $(".img-preview").attr('src',"");
+        $(".img-preview").hide();
+    });
+    // Create the preview image
+    $(".image-preview-input input:file").change(function (){
+        var file = this.files[0];
+        var reader = new FileReader();
+        // Set preview image into the popover data-content
+        reader.onload = function (e) {
+            $(".image-preview-input-title").text("Change");
+            $(".image-preview-clear").show();
+            $(".image-preview-filename").val(file.name);
+            $(".img-preview").attr('src', e.target.result);
+            $(".img-preview").show();
+        }
+        reader.readAsDataURL(file);
+    });
+  });
+</script>

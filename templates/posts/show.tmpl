@@ -1,0 +1,90 @@
+<div class="mx-3">
+  {{ range .FlashedMessages }}
+    <div class="alert alert-success" role="alert">{{ . }}</div>
+  {{ end }}
+</div>
+
+<div class="post-card  m-5">
+  <div class="card card-white post">
+      <div class="post-heading">
+          <div class="float-left image">
+              <img src="https://feather.sfo2.cdn.digitaloceanspaces.com/{{.Post.User.Image}}" class="img-circle avatar" alt="user profile image">
+          </div>
+          <div class="float-left meta">
+              <div class="title h5">
+                  <a href="#"><b>{{.Post.User.Username}}</b></a>
+                  (Category: {{.Post.Category}})
+              </div>
+              <h6 class="text-muted time">{{myCustomFunc .Post.CreatedAt false}}</h6>
+          </div>
+      </div>
+      <div class="post-description">
+          <p>{{.Post.Text}}</p>
+
+      </div>
+      <div class="card-footer">
+          <span class="card-link text-primary">{{.Post.VotesCount}} - <i class="fa fa-thumbs-up"></i></span>
+          <span  class="card-link text-primary">{{.Post.CommentsCount}} - <i class="fa fa-comment"></i></span>
+      </div>
+  </div>
+
+  <div class="">
+      <br>
+      <br>
+      <button type="button" class="btn btn-primary float-right px-4 py-2" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
+        <i class="fas fa-plus"></i> Add Comment
+      </button>
+      <br>
+  </div>
+
+  <div class="card shadow mt-5">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Comments</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4 px-2">
+
+
+
+          <div class="row">
+            <div class="col-sm-12">
+              <table class="table table-hover table-borderless dataTable mt-5 border bg-white material-card" id="dataTable" aria-describedby="dataTable_info">
+                <thead>
+                  <tr  role="row" class="m-3">
+                    <th class='border-0'>User</th>
+                    <th class='border-0'>Text</th>
+                    <th class='border-0'>Votes</th>
+                    <th class="timestamp">Created At</th>
+                  </tr>
+                </thead>
+                <tbody id="accordionMedication">
+                  {{range $key, $post := .Comments}}
+                  <tr class="border-bottom">
+                    <th scope="row" style="padding-top:25px;">
+                      <img src="https://feather.sfo2.cdn.digitaloceanspaces.com/{{$post.User.Image}}" class="rounded img-thumbnail mb-2" style="width:45px;height:45px; padding:2px;" alt="Avatar">
+                      <span class="font-weight-normal">{{$post.User.Username}}</span>
+                    </th>
+                    <td scope="row">
+                      {{$post.Text}}
+                    </td>
+                    <td>
+                      {{$post.VotesCount}}
+                    </td>
+                    <td>{{myCustomFunc $post.CreatedAt false}}</td>
+                  </tr>
+                  {{end}}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{{template "comments/create" .}}
