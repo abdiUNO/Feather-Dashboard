@@ -32,7 +32,6 @@ func (comment *Comment) BeforeCreate(scope *gorm.Scope) error {
 }
 
 func GetComments(id string) []*Comment {
-
 	comments := make([]*Comment, 0)
 
 	err := GetDB().Table("comment").Preload("User").Where("postId = ?", id).Order("createdAt DESC").Find(&comments).Error
@@ -45,6 +44,9 @@ func GetComments(id string) []*Comment {
 }
 
 func (comment *Comment) Create() map[string]interface{} {
+	post := GetPost(comment.PostID)
+
+	GetDB().Model(&post).Update("commentsCount", post.CommentsCount+1)
 	GetDB().Create(comment)
 
 	response := u.Message(true, "Post has been created")
